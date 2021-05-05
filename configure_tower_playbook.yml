@@ -4,6 +4,8 @@
   #connection: local
   vars:
     tower_cred_creation_dir: "./tower-credentials-creation.yml"
+  vars_files:
+    - ./tower-secrets.yml
   gather_facts: false
   tasks:
     
