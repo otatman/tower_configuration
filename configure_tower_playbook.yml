@@ -19,7 +19,7 @@
       
 
     - name: credentials role
-        include_role: 
-          name: redhat_cop.tower_configuration.credentials 
-        vars:
-          tower_credentials: "{{ tower_cred_creation_dir }}"
+      include_role: 
+        name: redhat_cop.tower_configuration.credentials 
+      vars:
+        tower_credentials: "{{ tower_cred_creation_dir }}"
