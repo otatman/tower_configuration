@@ -1,0 +1,25 @@
+---
+- name: configure credential in tower
+  hosts: localhost
+  connection: local
+  vars_files:
+    - ./tower-credentials-creation.yml
+  gather_facts: false
+  tasks:
+    
+    - name: get token for use during play
+      uri:
+        url: "http://{{ tower_host }}"
+        method: POST
+        user: "{{ tower_username }}"
+        password: "{{ tower_passname }}"
+        force_basic_auth: yes
+        status_code: 201
+        validate_certs: "{{ validate_certs }}"
+      
+
+    - name: credentials role
+        include_role: 
+          name: redhat_cop.tower_configuration.credentials 
+        vars:
+          tower_credentials: 

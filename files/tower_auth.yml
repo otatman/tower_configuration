@@ -1,0 +1,8 @@
+---
+tower_hostname: "{{ tower_hostname }}"
+tower_username: "{{ tower_username }}"
+tower_passname: "{{ tower_password }}"
+tower_validate_certs: "{{ tower_validate_certs }}"
+validate_certs: "{{ validate_certs }}"
+gitlab_username: "{{ gitlab_username }}"
+gitlab_password: "{{ gitlab_password }}"
