@@ -2,8 +2,8 @@
 - name: configure credential in tower
   hosts: localhost
   connection: local
-  vars_files:
-    - ./tower-credentials-creation.yml
+  vars:
+    tower_cred_creation_dir: "./tower-credentials-creation.yml"
   gather_facts: false
   tasks:
     
@@ -22,4 +22,4 @@
         include_role: 
           name: redhat_cop.tower_configuration.credentials 
         vars:
-          tower_credentials: 
+          tower_credentials: "{{ tower_cred_creation_dir }}"
