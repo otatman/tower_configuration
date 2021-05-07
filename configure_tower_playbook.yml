@@ -3,8 +3,8 @@
   hosts: all
   vars:
     tower_cred_creation_dir: "./tower-credentials-creation.yml"
-  vars_files:
-    - ./tower-secrets.yml
+  # vars_files:
+  #   - ./tower-secrets.yml
   gather_facts: false
   ignore_unreachable: true
   tasks:
