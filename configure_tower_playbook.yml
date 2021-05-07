@@ -17,16 +17,16 @@
     #     name: hvac
     #     state: present
 
-    - name: enable epel-release and install pip
-      become: yes
-      become_method: sudo
-      method: 65534
-      yum:
-        name: "{{ item}}"
-        state: present
-      with_items:
-        - epel-release
-        - python-pip
+    # - name: enable epel-release and install pip
+    #   become: yes
+    #   become_method: sudo
+    #   method: 65534
+    #   yum:
+    #     name: "{{ item}}"
+    #     state: present
+    #   with_items:
+    #     - epel-release
+    #     - python-pip
 
     - name: return vault secret from path
       ansible.builtin.debug:
