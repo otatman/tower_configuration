@@ -12,6 +12,7 @@
     - name: install hvac pip package
       become: yes
       become_method: sudo
+      method: 65534
       pip:
         name: hvac
         state: present
@@ -19,6 +20,7 @@
     - name: enable epel-release and install pip
       become: yes
       become_method: sudo
+      method: 65534
       yum:
         name: "{{ item}}"
         state: present
