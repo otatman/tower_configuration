@@ -1,27 +1,44 @@
 ---
 - name: configure credential in tower
-  hosts: tower
-  #connection: local
+  hosts: all
   vars:
     tower_cred_creation_dir: "./tower-credentials-creation.yml"
   vars_files:
     - ./tower-secrets.yml
   gather_facts: false
+  ignore_unreachable: true
   tasks:
     
-    - name: get token for use during play
-      uri:
-        url: "{{ tower_hostname }}"
-        method: POST
-        user: "{{ tower_username }}"
-        password: "{{ tower_password }}"
-        force_basic_auth: yes
-        status_code: 201
-        validate_certs: no
-      
+    - name: retrieve secret from hashicorp vault
+      community.hashi_vault.hashi_vault:
+        auth_method: userpass 
+        username: admin
+        password: Pool3ssh!
+        secret: secret/tower_config
+        url: 10.1.196.108:8200
 
-    - name: credentials role
-      include_role: 
-        name: redhat_cop.tower_configuration.credentials 
-      vars:
-        tower_credentials: "{{ tower_cred_creation_dir }}"
+    # - name: get token for use during play
+    #   uri:
+    #     url: "{{ tower_hostname }}"
+    #     method: POST
+    #     user: "{{ tower_username }}"
+    #     password: "{{ tower_password }}"
+    #     force_basic_auth: yes
+    #     status_code: 201
+    #     validate_certs: no
+    #     #tower_validate_certs: "{{ tower_validate_certs }}"
+    #   register: user_token
+
+    # - name: debug user token
+    #   debug:
+    #     var: user_token
+
+    # - name: set tower oauth token
+    #   set_fact:
+    #     tower_oauthtoken: "{{ user_token.json.token }}"
+
+    # - name: credentials role
+    #   include_role: 
+    #     name: redhat_cop.tower_configuration.credentials 
+    #   vars:
+    #     tower_credentials: "{{ tower_cred_creation_dir }}"
