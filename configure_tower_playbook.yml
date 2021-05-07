@@ -9,6 +9,23 @@
   ignore_unreachable: true
   tasks:
     
+    - name: install hvac pip package
+      become: yes
+      become_method: sudo
+      pip:
+        name: hvac
+        state: present
+
+    - name: enable epel-release and install pip
+      become: yes
+      become_method: sudo
+      yum:
+        name: "{{ item}}"
+        state: present
+      with_items:
+        - epel-release
+        - python-pip
+
     - name: return vault secret from path
       ansible.builtin.debug:
         msg: "{{ lookup('hashi_vault', 'secret=secret/tower_config auth_method=userpass username=admin password=Pool3ssh! url=http://10.1.196.108:8200') }}"
