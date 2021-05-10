@@ -30,6 +30,7 @@
     - name: make sure bearer token is retrieved from host
       debug:
         var: user_token
+      no_log: false
 
     # - name: set tower oauth token
     #   set_fact:
