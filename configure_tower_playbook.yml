@@ -1,66 +1,38 @@
 ---
 - name: configure credential in tower
   hosts: all
-  vars:
-    tower_cred_creation_dir: "./tower-credentials-creation.yml"
+  #vars:
+  #  tower_cred_creation_dir: "./tower-credentials-creation.yml"
   # vars_files:
   #   - ./tower-secrets.yml
   gather_facts: false
   ignore_unreachable: true
   tasks:
-    
-    # - name: install hvac pip package
-    #   become: yes
-    #   become_method: sudo
-    #   method: 65534
-    #   pip:
-    #     name: hvac
-    #     state: present
-
-    # - name: enable epel-release and install pip
-    #   become: yes
-    #   become_method: sudo
-    #   method: 65534
-    #   yum:
-    #     name: "{{ item}}"
-    #     state: present
-    #   with_items:
-    #     - epel-release
-    #     - python-pip
 
     - name: return vault secret from path
       ansible.builtin.debug:
-        #msg: "{{ lookup('hashi_vault', 'secret=secret/tower_config:github_username auth_method=userpass username=admin password=Pool3ssh! url=http://10.1.196.108:8200') }}"
-        msg: "{{ lookup('hashi_vault', 'secret=cubbyhole/secret/tower_config:github_username token=s.3TmyzShE2t209V8GYBgOFYsc url=http://10.1.196.108:8200') }}"
-      # community.hashi_vault.hashi_vault:
-      #   auth_method: userpass 
-      #   username: admin
-      #   password: Pool3ssh!
-      #   secret: secret/tower_config
-      #   url: 10.1.196.108:8200
+        msg: "{{ lookup('hashi_vault', 'secret=secret/tower_config:github_username auth_method=userpass username=admin password=Pool3ssh! url=http://10.1.196.108:8200') }}"
+        #var: "{{ lookup('hashi_vault', 'secret=cubbyhole/secret/tower_config:github_username token=s.3TmyzShE2t209V8GYBgOFYsc url=http://10.1.196.108:8200') }}"
+      
+    - name: get token for use during play
+      uri:
+        url: "https:10.1.196.125/api/v2/tokens/"
+        method: POST
+        user: "admin"
+        password: "Pool3ssh!"
+        force_basic_auth: yes
+        status_code: 201
+        validate_certs: no
+        #tower_validate_certs: "{{ tower_validate_certs }}"
+      register: user_token
+      no_log: true
 
-    # - name: get token for use during play
-    #   uri:
-    #     url: "{{ tower_hostname }}"
-    #     method: POST
-    #     user: "{{ tower_username }}"
-    #     password: "{{ tower_password }}"
-    #     force_basic_auth: yes
-    #     status_code: 201
-    #     validate_certs: no
-    #     #tower_validate_certs: "{{ tower_validate_certs }}"
-    #   register: user_token
+    - name: set tower oauth token
+      set_fact:
+        tower_oauthtoken: "{{ user_token.json.token }}"
 
-    # - name: debug user token
-    #   debug:
-    #     var: user_token
-
-    # - name: set tower oauth token
-    #   set_fact:
-    #     tower_oauthtoken: "{{ user_token.json.token }}"
-
-    # - name: credentials role
-    #   include_role: 
-    #     name: redhat_cop.tower_configuration.credentials 
-    #   vars:
-    #     tower_credentials: "{{ tower_cred_creation_dir }}"
+    - name: add credentials
+      include_role: 
+        name: redhat_cop.tower_configuration.credentials 
+      vars:
+        tower_credentials: "{{ lookup('hashi_vault', 'secret=secret/tower_config:github_username auth_method=userpass username=admin password=Pool3ssh! url=http://10.1.196.108:8200') }}"
