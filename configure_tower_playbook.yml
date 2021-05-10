@@ -23,7 +23,6 @@
         force_basic_auth: yes
         status_code: 201
         validate_certs: no
-        tower_validate_certs: "no"
       register: user_token
       no_log: false
 
