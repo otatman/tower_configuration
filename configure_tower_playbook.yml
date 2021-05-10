@@ -30,7 +30,7 @@
 
     - name: return vault secret from path
       ansible.builtin.debug:
-        msg: "{{ lookup('hashi_vault', 'secret=cubbyhole/secret/tower_config/github_username auth_method=userpass username=admin password=Pool3ssh! url=http://10.1.196.108:8200') }}"
+        msg: "{{ lookup('hashi_vault', 'secret=secret/tower_config/github_username:tower_config auth_method=userpass username=admin password=Pool3ssh! url=http://10.1.196.108:8200') }}"
       # community.hashi_vault.hashi_vault:
       #   auth_method: userpass 
       #   username: admin
