@@ -23,16 +23,20 @@
         force_basic_auth: yes
         status_code: 201
         validate_certs: no
-        #tower_validate_certs: "{{ tower_validate_certs }}"
+        tower_validate_certs: "no"
       register: user_token
       no_log: true
 
-    - name: set tower oauth token
-      set_fact:
-        tower_oauthtoken: "{{ user_token.json.token }}"
+    - name: make sure bearer token is retrieved from host
+      debug:
+        var: user_token
 
-    - name: add credentials
-      include_role: 
-        name: redhat_cop.tower_configuration.credentials 
-      vars:
-        tower_credentials: "{{ lookup('hashi_vault', 'secret=secret/tower_config:github_username auth_method=userpass username=admin password=Pool3ssh! url=http://10.1.196.108:8200') }}"
+    # - name: set tower oauth token
+    #   set_fact:
+    #     tower_oauthtoken: "{{ user_token.json.token }}"
+
+    # - name: add credentials
+    #   include_role: 
+    #     name: redhat_cop.tower_configuration.credentials 
+    #   vars:
+    #     tower_credentials: "{{ lookup('hashi_vault', 'secret=secret/tower_config:github_username auth_method=userpass username=admin password=Pool3ssh! url=http://10.1.196.108:8200') }}"
