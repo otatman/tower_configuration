@@ -7,7 +7,6 @@
   #   - ./tower-secrets.yml
   gather_facts: false
   ignore_unreachable: true
-  no_log: false
   tasks:
 
     - name: return vault secret from path
@@ -26,11 +25,12 @@
         validate_certs: no
         tower_validate_certs: "no"
       register: user_token
-      no_log: true
+      no_log: false
 
     - name: make sure bearer token is retrieved from host
       debug:
         var: user_token
+
 
     # - name: set tower oauth token
     #   set_fact:
