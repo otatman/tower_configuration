@@ -8,7 +8,7 @@
   gather_facts: true
   ignore_unreachable: true
   collections:
-    - tower.config
+    - ansible.tower
 
   tasks:
 
@@ -38,7 +38,7 @@
     #   set_fact:
     #     tower_oauthtoken: "{{ user_token.json.token }}"
 
-    - name: create a new token using tower username/password
+    - name: create a token using tower username/password
       awx.awx.tower_token:
         description: 'creating token to test tower jobs'
         scope: 'write'
