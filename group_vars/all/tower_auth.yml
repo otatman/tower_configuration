@@ -1,0 +1,5 @@
+---
+tower_hostname:        '{{ tower_host | default(lookup("env", "TOWER_HOST")) }}'
+tower_username:        '{{ tower_user | default(lookup("env", "TOWER_USERNAME")) }}'
+tower_password:        '{{ tower_pass | default(lookup("env", "TOWER_PASSWORD")) }}'
+tower_validate_certs:  '{{ tower_certs | default(lookup("env", "TOWER_VERIFY_SSL")) }}'
