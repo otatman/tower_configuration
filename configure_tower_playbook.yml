@@ -40,7 +40,7 @@
     #     tower_oauthtoken: "{{ user_token.json.token }}"
 
     - name: create a token using tower username/password
-      awx.awx.tower_token:
+      tower_token:
         description: 'creating token to test tower jobs'
         scope: 'write'
         state: present
