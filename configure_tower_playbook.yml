@@ -8,7 +8,7 @@
   gather_facts: true
   ignore_unreachable: true
   collections:
-    - awx.awx
+    - tower.config
   tasks:
 
     - name: return vault secret from path
