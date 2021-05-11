@@ -9,6 +9,7 @@
   ignore_unreachable: true
   collections:
     - ansible.tower
+    - awx.awx 
   tasks:
 
     - name: return vault secret from path
