@@ -60,7 +60,7 @@
         - name: vault credentials
           description: credentials for tower from vault
           organization: Default
-          credentail_type: Vault
+          credentail_type: Source Control
           inputs:
             username: jtatman
             password: "{{ lookup('hashi_vault', 'secret=cubbyhole/secret/tower_config:github_password token=s.3TmyzShE2t209V8GYBgOFYsc url=http://10.1.196.108:8200') }}"
