@@ -9,14 +9,13 @@
   ignore_unreachable: true
   collections:
     - ansible.tower
-    - aww.awx
 
   tasks:
 
-    - name: return vault secret from path
-      ansible.builtin.debug:
-        #msg: "{{ lookup('hashi_vault', 'secret=secret/tower_config:github_username auth_method=userpass username=admin password=Pool3ssh! url=http://10.1.196.108:8200') }}"
-        msg: "{{ lookup('hashi_vault', 'secret=cubbyhole/secret/tower_config:github_username token=s.3TmyzShE2t209V8GYBgOFYsc url=http://10.1.196.108:8200') }}"
+    # - name: return vault secret from path
+    #   ansible.builtin.debug:
+    #     #msg: "{{ lookup('hashi_vault', 'secret=secret/tower_config:github_username auth_method=userpass username=admin password=Pool3ssh! url=http://10.1.196.108:8200') }}"
+    #     msg: "{{ lookup('hashi_vault', 'secret=cubbyhole/secret/tower_config:github_username token=s.3TmyzShE2t209V8GYBgOFYsc url=http://10.1.196.108:8200') }}"
       
     # - name: get token for use during play
     #   uri:
@@ -39,18 +38,18 @@
     #   set_fact:
     #     tower_oauthtoken: "{{ user_token.json.token }}"
 
-    - name: create a token using tower username/password
-      awx.awx.tower_token:
-        description: 'creating token to test tower jobs'
-        scope: 'write'
-        state: present
-        tower_host: "{{ tower_hostname }}"
-        tower_username: "{{ tower_username }}"
-        tower_password: "{{ tower_password }}"
+    # - name: create a token using tower username/password
+    #   awx.awx.tower_token:
+    #     description: 'creating token to test tower jobs'
+    #     scope: 'write'
+    #     state: present
+    #     tower_host: "{{ tower_hostname }}"
+    #     tower_username: "{{ tower_username }}"
+    #     tower_password: "{{ tower_password }}"
 
-    - name: print all available facts
-      ansible.builtin.debug:
-         var: ansible_facts
+    # - name: print all available facts
+    #   ansible.builtin.debug:
+    #      var: ansible_facts
 
     - name: add credentials
       include_role: 
