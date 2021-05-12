@@ -56,4 +56,4 @@
       include_role: 
         name: redhat_cop.tower_configuration.credentials 
       vars:
-        tower_credentials: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=secret/tower_config:github_username token=s.3TmyzShE2t209V8GYBgOFYsc url=http://10.1.196.108:8200') }}"
+        tower_credentials: "{{ lookup('hashi_vault', 'secret=cubbyhole/secret/tower_config:github_username token=s.3TmyzShE2t209V8GYBgOFYsc url=http://10.1.196.108:8200') }}"
