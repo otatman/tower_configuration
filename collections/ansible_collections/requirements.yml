@@ -1,0 +1,5 @@
+---
+collections:
+- name: community.hashi_vault
+- name: ansible.tower
+- name: redhat_cop.tower_configuration
